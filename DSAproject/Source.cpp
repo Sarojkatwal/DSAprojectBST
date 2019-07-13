@@ -10,6 +10,7 @@
 #include "showinorder.h"
 using namespace std;
 class EMPTY {};
+class EXISTS{};
 bst *root = NULL, *newnode, *p;
 void createbst(int dat)
 {
@@ -34,7 +35,6 @@ void createbst(int dat)
 				{
 					p->left = newnode;
 					flag = 1;
-					//cout<<"Pushed data on left node:"<<dat<<endl;
 				}
 				else
 				{
@@ -43,8 +43,7 @@ void createbst(int dat)
 			}
 			else if (newnode->data == p->data)
 			{
-				cout << "Already exists";
-				flag = 1;
+				throw EXISTS();
 			}
 			else
 			{
@@ -52,7 +51,6 @@ void createbst(int dat)
 				{
 					p->right = newnode;
 					flag = 1;
-					//cout<<"Pushed data on right node:"<<dat<<endl;
 				}
 				else
 				{
@@ -132,58 +130,21 @@ void deletenode(bst *q, int m)
 				{
 					p->left = NULL;
 					delete temp;
-					/*cout<<"Left of p or q made null\n";
-					if(p->left==NULL)
-					{
-						cout<<"Now left null\n";
-					}
-					if(p->right==NULL)
-					{
-						cout<<"right already null\n";
-					}
-					*/
 				}
 				else if (p->left == NULL)
 				{
 					p->right = NULL;
 					delete temp;
-					/*cout<<"right of p or q made null\n";
-					if(p->right==NULL)
-					{
-						cout<<"Now right null\n";
-					}
-					if(p->left==NULL)
-					{
-						cout<<"Left already null\n";
-					}*/
 				}
 				else if (p->left->data == m)
 				{
-					//cout<<"none branch of p null.Data to be deleted on left of p:"<<p->data<<endl;
 					delete temp;
 					p->left = NULL;
-					/*if(p->left==NULL)
-					{
-						cout<<"Now left null\n";
-					}
-					if(p->right==NULL)
-					{
-						cout<<"right already null\n";
-					}*/
 				}
 				else
 				{
 					p->right = NULL;
 					delete temp;
-					/*cout<<"none branch of p null.Data to be deleted on right of p:"<<p->data<<endl;
-					if(p->right==NULL)
-					{
-						cout<<"Now right null\n";
-					}
-					if(p->left==NULL)
-					{
-						cout<<"Left already null\n";
-					}*/
 				}
 			}
 			else if (temp->right == NULL)
@@ -258,13 +219,11 @@ void deletenode(bst *q, int m)
 		else if (temp->data > m)
 		{
 			p = temp;
-			//cout<<"Go left. p-data:"<<p->data<<endl;
 			deletenode(temp->left, m);
 		}
 		else
 		{
 			p = temp;
-			//cout<<"Go right: p-data:"<<p->data<<endl;
 			deletenode(temp->right, m);
 		}
 	}
@@ -272,7 +231,7 @@ void deletenode(bst *q, int m)
 int main()
 {
 	ORDER O;
-	int i, data, arr[10] = {10,4,6,5,20,30,40,25,26,24};
+	int i, data;
 	while(true)
 	{
 		try
@@ -283,23 +242,11 @@ int main()
 			cin>>i;
 			if(i==1)
 			{
-				/*//INSERT A;
+				INSERT A;
 				cout<<"Enter data do you want to push:";
 				cin>>data;
 				createbst(data);
-				//A.afterinsertion(root,data);
-				cout << "How many data do you want to push:";
-				cin >> n;
-				for (i = 0; i < n; i++)
-				{
-					cout << "Data " << i + 1 << ":";
-					cin >> arr[i];
-				}
-				*/
-				for (i = 0; i < 10; i++)
-				{
-					createbst(arr[i]);
-				}
+				A.afterinsertion(root,data);
 			}
 			else if(i==2)
 			{
@@ -346,6 +293,10 @@ int main()
 		catch(EMPTY)
 		{
 			cout<<"The tree is empty\n";
+		}
+		catch (EXISTS)
+		{
+			cout << "Already exists";
 		}
 		cin.get();
 		cin.get();

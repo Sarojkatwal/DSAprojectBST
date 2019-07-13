@@ -3,7 +3,7 @@ class ORDER
 public:
 	void order(bst *q,int n)
 	{
-		float cirrad = 25.0f, width = 180, height = 180 / sqrt(3), x = 650.0, y = 50.0;
+		float cirrad = 25.0f, width = 180.0f, height = 180.0f / sqrt(3.0f), x = 650.0f, y = 50.0f;
 		sf::ContextSettings settings;
 		settings.antialiasingLevel = 8;
 		sf::RenderWindow window(sf::VideoMode(1300, 750), "Tree after insertion", sf::Style::Default, settings);
@@ -54,7 +54,7 @@ public:
 		std::ostringstream ddata(ios::ate | ios::out);
 		font4text.loadFromFile("roman.ttf");
 		nodedata.setFont(font4text);
-		nodedata.setCharacterSize(cirrad);
+		nodedata.setCharacterSize(static_cast<int>(cirrad));
 		nodedata.setFillColor(sf::Color::Red);
 		nodedata.setStyle(sf::Text::Bold);
 		torder.setFont(font4text);
@@ -65,8 +65,8 @@ public:
 		window->draw(torder);
 		if (q != NULL)
 		{
-			nodedata.setPosition(x + cirrad / 2, y + cirrad / 2.6);
-			float a = sqrt(pow((width*1.3 - sqrt(2)*(cirrad+2)), 2) + pow(((width*1.30) / sqrt(3) - sqrt(2)*(cirrad+2)), 2));
+			nodedata.setPosition(x + cirrad / 2.0f, y + cirrad / 2.6f);
+			float a = sqrt(pow((width*1.3f - sqrt(2.0f)*(cirrad+2.0f)), 2) + pow(((width*1.30f) / sqrt(3.0f) - sqrt(2.0f)*(cirrad+2.0f)), 2));
 			sf::RectangleShape line(sf::Vector2f(a, cirrad / 4));
 			ddata << q->data;
 			nodedata.setString(ddata.str());
@@ -93,8 +93,8 @@ public:
 			}
 			window->draw(shape);
 			window->draw(nodedata);
-			show(q->left, window, x - width, y + height, width / 10 * 7, (width / 10 * 7) / sqrt(3), 0, 0, cirrad - 2, ddat, str);
-			show(q->right, window, x + width, y + height, width * 7 / 10, (width / 10 * 7) / sqrt(3), 0, 1, cirrad-2, ddat,str);
+			show(q->left, window, x - width, y + height, width / 10.0f * 7.0f, (width / 10.0f * 7.0f) / sqrt(3.0f), 0, 0, cirrad - 2, ddat, str);
+			show(q->right, window, x + width, y + height, width * 7.0f / 10.0f, (width / 10.0f * 7.0f) / sqrt(3.0f), 0, 1, cirrad-2, ddat,str);
 		}
 	}
 	void animatepreorder(bst *q,bst *root ,sf::RenderWindow *window, float x, float y, float width, float height, int initial, int childdir, float cirrad)
