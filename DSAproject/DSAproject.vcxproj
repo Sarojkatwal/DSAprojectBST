@@ -138,6 +138,7 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="delete.h" />
     <ClInclude Include="insert.h" />
     <ClInclude Include="showinorder.h" />
   </ItemGroup>

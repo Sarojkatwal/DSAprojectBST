@@ -6,7 +6,7 @@ public:
 		float cirrad = 25.0f, width = 180.0f, height = 180.0f / sqrt(3.0f), x = 650.0f, y = 50.0f;
 		sf::ContextSettings settings;
 		settings.antialiasingLevel = 8;
-		sf::RenderWindow window(sf::VideoMode(1300, 750), "Tree after insertion", sf::Style::Default, settings);
+		sf::RenderWindow window(sf::VideoMode(1300, 750), "Tree traversal", sf::Style::Default, settings);
 		window.setPosition(sf::Vector2i(10, 10));
 		while (window.isOpen())
 		{

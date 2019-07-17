@@ -8,13 +8,14 @@
 #include<cmath>
 #include "insert.h"
 #include "showinorder.h"
+#include "delete.h"
 using namespace std;
 class EMPTY {};
 class EXISTS{};
+DELETE D;
 bst *root = NULL, *newnode, *p;
 void createbst(int dat)
 {
-	
 	newnode = new bst;
 	newnode->data = dat;
 	newnode->left = NULL;
@@ -111,7 +112,7 @@ bool searchdata(bst *q, int m)
 	else
 		return false;
 }
-void deletenode(bst *q, int m)
+void deletenode(bst *q, int m,int gfact=999)
 {
 	bst *temp;
 	temp = q;
@@ -121,6 +122,8 @@ void deletenode(bst *q, int m)
 		{
 			if (temp->left == NULL && temp->right == NULL)
 			{
+				if(gfact==999)
+					D.afterdeletions(root, m);
 				if (temp == root)
 				{
 					root = NULL;
@@ -151,6 +154,8 @@ void deletenode(bst *q, int m)
 			{
 				if (p->left != NULL)
 				{
+					if (gfact == 999)
+						D.afterdeletions(root, m, temp->left->data,1);
 					if (p->left->data == m)
 					{
 						p->left = temp->left;
@@ -164,6 +169,8 @@ void deletenode(bst *q, int m)
 				}
 				else
 				{
+					if (gfact == 999)
+						D.afterdeletions(root, m,temp->left->data,1);
 					p->right = temp->left;
 					delete temp;
 				}
@@ -172,16 +179,22 @@ void deletenode(bst *q, int m)
 			{
 				if (root == temp)
 				{
+					if (gfact == 999)
+						D.afterdeletions(root, m, temp->right->data,1);
 					root = temp->right;
 					delete temp;
 				}
-				else if (p->left->data == m)
+				else if (p->left!=NULL && p->left->data == m)
 				{
+					if (gfact == 999)
+						D.afterdeletions(root, m, temp->right->data,1);
 					p->left = temp->right;
 					delete temp;
 				}
 				else
 				{
+					if (gfact == 999)
+						D.afterdeletions(root, m, q->right->data,1);
 					p->right = q->right;
 					delete temp;
 				}
@@ -199,7 +212,8 @@ void deletenode(bst *q, int m)
 							q = q->right;
 						}
 						int k = q->data;
-						deletenode(root, q->data);
+						D.afterdeletions(root, m, k,2);
+						deletenode(root, q->data,1);
 						temp1->data = k;
 					}
 					else
@@ -210,7 +224,8 @@ void deletenode(bst *q, int m)
 							q = q->left;
 						}
 						int k = q->data;
-						deletenode(root, q->data);
+						D.afterdeletions(root, m, k,2);
+						deletenode(root, q->data,1);
 						temp1->data = k;
 					}
 				}
@@ -219,19 +234,19 @@ void deletenode(bst *q, int m)
 		else if (temp->data > m)
 		{
 			p = temp;
-			deletenode(temp->left, m);
+			deletenode(temp->left, m, gfact);
 		}
 		else
 		{
 			p = temp;
-			deletenode(temp->right, m);
+			deletenode(temp->right, m ,gfact);
 		}
 	}
 }
 int main()
 {
 	ORDER O;
-	int i, data;
+	int i, data, arr[10] = { 10,4,6,5,20,30,40,23,24,26 };
 	while(true)
 	{
 		try
@@ -247,6 +262,13 @@ int main()
 				cin>>data;
 				createbst(data);
 				A.afterinsertion(root,data);
+				/*
+				for (i = 0; i < 10; i++)
+				{
+					createbst(arr[i]);
+				}
+				*/
+
 			}
 			else if(i==2)
 			{
@@ -283,7 +305,7 @@ int main()
 			{
 				cout<<"Enter data to be deleted:";
 				cin>>data;
-				deletenode(root,data);
+				deletenode(root, data);
 			}
 			else
 			{
