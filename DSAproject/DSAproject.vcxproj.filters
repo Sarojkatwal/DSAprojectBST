@@ -32,5 +32,14 @@
     <ClInclude Include="delete.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Mainmenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="err.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -9,6 +9,8 @@
 #include "insert.h"
 #include "showinorder.h"
 #include "delete.h"
+#include "Mainmenu.h"
+#include "err.h"
 using namespace std;
 class EMPTY {};
 class EXISTS{};
@@ -61,6 +63,8 @@ void createbst(int dat)
 		}
 	}
 }
+
+/*
 void preorder(bst *q)
 {
 	if (root == NULL)
@@ -96,6 +100,7 @@ void inorder(bst *q)
 		inorder(q->right);
 	}
 }
+*/
 bool searchdata(bst *q, int m)
 {
 	if (q != NULL)
@@ -116,6 +121,10 @@ void deletenode(bst *q, int m,int gfact=999)
 {
 	bst *temp;
 	temp = q;
+	if (root == NULL)
+	{
+		throw EMPTY();
+	}
 	if (temp != NULL)
 	{
 		if (temp->data == m)
@@ -245,7 +254,51 @@ void deletenode(bst *q, int m,int gfact=999)
 }
 int main()
 {
-	ORDER O;
+	sf::RenderWindow window;
+	INSERT IN;
+	mainmenu M;
+	INPUT A;
+	int x, num;
+	while (true)
+	{
+		try
+		{
+			x = M.draw();
+			switch (x)
+			{
+			case 1:
+				num = A.inputs(&window);
+				if (num != -1)
+				{
+					createbst(num);
+					IN.afterinsertion(root, num);
+				}
+				break;
+			case 2:
+				num = A.inputs(&window);
+				if (num != -1)
+				{
+					deletenode(root,num);
+				}
+				break;
+			case 3:
+				break;
+			case 4:
+				return 1;
+			}
+		}
+		catch (EMPTY)
+		{
+			EMPTYOREXISTS B;
+			B.showerr("Empty Tree");
+		}
+		catch (EXISTS)
+		{
+			EMPTYOREXISTS B;
+			B.showerr("Data already present");
+		}
+	}
+	/*ORDER O;
 	int i, data, arr[10] = { 10,4,6,5,20,30,40,23,24,26 };
 	while(true)
 	{
@@ -262,12 +315,12 @@ int main()
 				cin>>data;
 				createbst(data);
 				A.afterinsertion(root,data);
-				/*
+				
 				for (i = 0; i < 10; i++)
 				{
 					createbst(arr[i]);
 				}
-				*/
+				
 
 			}
 			else if(i==2)
@@ -324,5 +377,6 @@ int main()
 		cin.get();
 		system("cls");
 	}
+	*/
 	return 0;
 }

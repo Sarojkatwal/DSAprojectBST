@@ -139,7 +139,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="delete.h" />
+    <ClInclude Include="err.h" />
+    <ClInclude Include="input.h" />
     <ClInclude Include="insert.h" />
+    <ClInclude Include="Mainmenu.h" />
     <ClInclude Include="showinorder.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
