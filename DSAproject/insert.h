@@ -1,28 +1,21 @@
+#include "Search.h"
 #define PI 3.14159
 using namespace std;
-struct bst
-{
-	int data;
-	bst *left, *right;
-};
 class INSERT
 {
 public:
-	void afterinsertion(bst *q,int ddat)
+	SEARCH ss;
+	void afterinsertion(sf::RenderWindow *window,bst *q,int ddat,int n)
 	{
 		int i = 0;
 		float cirrad = 25.0f,width=180.0f,height=180.0f/sqrt(3.0f),x=650.0f,y=20.0f;
-		sf::ContextSettings settings;
-		settings.antialiasingLevel = 8;
-		sf::RenderWindow window(sf::VideoMode(1300, 750),"Insertion Process",sf::Style::Default,settings);
-		window.setPosition(sf::Vector2i(10, 10));
-		while (window.isOpen())
+		while (window->isOpen())
 		{
 			sf::Event event;
-			while (window.pollEvent(event))
+			while (window->pollEvent(event))
 			{
 				if (event.type == sf::Event::Closed)
-					window.close();
+					window->close();
 				if (event.type == sf::Event::MouseButtonPressed)
 				{
 					if (event.mouseButton.button == sf::Mouse::Right)
@@ -31,10 +24,26 @@ public:
 					}
 				}
 			}
-			window.clear();
-			show(q, &window,x,y,width,height,1,0,cirrad,ddat,i);
-			window.display();
-			if (i == 0 || i==1 ||i==2)
+			window->clear();
+			if (n == 1)
+			{
+				show(q, window, x, y, width, height, 1, 0, cirrad, ddat, i);
+				window->display();
+				if (i > 5)
+				{
+					window->close();
+					return;
+				}
+			}
+			else if(n==0)
+			{
+				window->clear();
+				ss.show(q, window, x, y, width, height, 1, 0, cirrad, 999999, "", ddat);
+				window->display();
+				ss.animatesearch(q, q, window, x, y, width, height, 1, 0, cirrad,ddat, 1);
+				return;
+			}
+			if( (i == 0 || i==1 ||i==2||i==3||i==4||i==5) && n!=0)
 			{
 				sf::sleep(sf::seconds(1.0f));
 			}

@@ -19,7 +19,7 @@ public:
 				{
 					if (event.mouseButton.button == sf::Mouse::Right)
 					{
-						cout << event.mouseButton.x << "  " << event.mouseButton.y << endl;
+						//cout << event.mouseButton.x << "  " << event.mouseButton.y << endl;
 					}
 				}
 			}

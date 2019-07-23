@@ -143,6 +143,7 @@
     <ClInclude Include="input.h" />
     <ClInclude Include="insert.h" />
     <ClInclude Include="Mainmenu.h" />
+    <ClInclude Include="Search.h" />
     <ClInclude Include="showinorder.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

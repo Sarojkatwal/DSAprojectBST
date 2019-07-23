@@ -41,5 +41,8 @@
     <ClInclude Include="err.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Search.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -29,7 +29,11 @@ public:
 			window.display();
 			if (i == 0 || i==1|| i==2||i==3||i==4)
 			{
-				sf::sleep(sf::seconds(0.5f));
+				sf::sleep(sf::seconds(5.0f));
+			}
+			if (i == 2 && noofchild == 2)
+			{
+				sf::sleep(sf::seconds(2.0f));
 			}
 			i++;
 		}
@@ -43,12 +47,18 @@ public:
 		shape.setOutlineColor(sf::Color::Blue);
 		sf::Font font4text;
 		sf::Text nodedata, torder;
-		std::ostringstream ddata(ios::ate | ios::out);
+		std::ostringstream ddata, hint;
 		font4text.loadFromFile("roman.ttf");
 		nodedata.setFont(font4text);
 		nodedata.setCharacterSize(static_cast<int>(cirrad));
 		nodedata.setFillColor(sf::Color::Red);
 		nodedata.setStyle(sf::Text::Bold);
+
+		torder.setFont(font4text);
+		torder.setCharacterSize(30);
+		torder.setFillColor(sf::Color::White);
+		torder.setStyle(sf::Text::Bold);
+		torder.setPosition(10, 10);
 		if (q != NULL)
 		{
 			nodedata.setPosition(x + cirrad / 2.0f, y + cirrad / 2.6f);
@@ -57,10 +67,24 @@ public:
 			ddata << q->data;
 			nodedata.setString(ddata.str());
 			shape.setPosition(x, y);
-			if (q->data == ddat  &&  q->left==NULL &&  q->right==NULL  && i!=0)
+			if (q->data == ddat  &&  q->left==NULL &&  q->right==NULL)
 			{
-				if (i == 1)
+				if (i == 0)
 				{
+					hint.str("");
+					hint << "Find the node with given value.";
+					torder.setString(hint.str());
+					window->draw(torder);
+				}
+				else if (i == 1)
+				{
+					hint.str("");
+					if (i == 1)
+					{
+						hint << "Remove that node from tree.";
+					}
+					torder.setString(hint.str());
+					window->draw(torder);
 					shape.setOutlineColor(sf::Color::Red);
 					shape.setFillColor(sf::Color::Black);
 					line.setFillColor(sf::Color::Red);
@@ -78,6 +102,10 @@ public:
 			{
 				if (i == 1)
 				{
+					hint.str("");
+					hint << "Find the node with given value.";
+					torder.setString(hint.str());
+					window->draw(torder);
 					if (q->data == ddat)
 					{
 						shape.setOutlineColor(sf::Color::Red);
@@ -86,6 +114,10 @@ public:
 				}
 				else if (i == 2)
 				{
+					hint.str("");
+					hint << "Find largest data on left subtree\nor smallest data on right subtree";
+					torder.setString(hint.str());
+					window->draw(torder);
 					if (q->data == ddat)
 					{
 						shape.setOutlineColor(sf::Color::Red);
@@ -98,6 +130,10 @@ public:
 				}
 				else if (i == 3)
 				{
+					hint.str("");
+					hint << "Replace the value of node to\n be removed with this value ("<<sdata<<")";
+					torder.setString(hint.str());
+					window->draw(torder);
 					if (q->data == ddat)
 					{
 						ddata.str("");
@@ -112,6 +148,10 @@ public:
 				}
 				else if (i == 4)
 				{
+					hint.str("");
+					hint << "Remove "<< sdata <<" from tree";
+					torder.setString(hint.str());
+					window->draw(torder);
 					if (q->data == ddat)
 					{
 						ddata.str("");
@@ -145,6 +185,10 @@ public:
 			{
 				if (i == 1)
 				{
+					hint.str("");
+					hint << "Find the node with given value.";
+					torder.setString(hint.str());
+					window->draw(torder);
 					if (q->data == ddat)
 					{
 						shape.setOutlineColor(sf::Color::Red);
@@ -153,6 +197,10 @@ public:
 				}
 				else if (i == 2)
 				{
+					hint.str("");
+					hint << "Find the child node.";
+					torder.setString(hint.str());
+					window->draw(torder);
 					if (q->data == ddat)
 					{
 						shape.setOutlineColor(sf::Color::Red);
@@ -165,6 +213,10 @@ public:
 				}
 				else if (i == 3)
 				{
+					hint.str("");
+					hint << "Remove the node from tree.";
+					torder.setString(hint.str());
+					window->draw(torder);
 					if (q->data == ddat)
 					{
 						shape.setOutlineColor(sf::Color::Red);
@@ -178,6 +230,10 @@ public:
 				}
 				else if (i == 4)
 				{
+					hint.str("");
+					hint << "Redirect the pointer from parent node\nof deleted node to its subtree.\nIf node deleted is root node\nMake its child root node.";
+					torder.setString(hint.str());
+					window->draw(torder);
 					if (q->data == ddat)
 					{
 						nodedata.setFillColor(sf::Color::Transparent);

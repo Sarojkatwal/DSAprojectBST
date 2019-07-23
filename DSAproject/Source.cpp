@@ -14,6 +14,7 @@
 using namespace std;
 class EMPTY {};
 class EXISTS{};
+class DONOTEXISTS{};
 DELETE D;
 bst *root = NULL, *newnode, *p;
 void createbst(int dat)
@@ -63,7 +64,6 @@ void createbst(int dat)
 		}
 	}
 }
-
 /*
 void preorder(bst *q)
 {
@@ -101,21 +101,19 @@ void inorder(bst *q)
 	}
 }
 */
-bool searchdata(bst *q, int m)
+void searchdata(bst *q, int m)
 {
 	if (q != NULL)
 	{
 		if (q->data == m)
 		{
-			return true;
+			
 		}
 		else if (q->data > m)
 			searchdata(q->left, m);
 		else
 			searchdata(q->right, m);
 	}
-	else
-		return false;
 }
 void deletenode(bst *q, int m,int gfact=999)
 {
@@ -251,9 +249,15 @@ void deletenode(bst *q, int m,int gfact=999)
 			deletenode(temp->right, m ,gfact);
 		}
 	}
+	else
+	{
+	throw DONOTEXISTS();
+	}
 }
 int main()
 {
+	sf::ContextSettings settings;
+	int arr[10] = { 10,4,6,5,20,30,40,23,24,26 };
 	sf::RenderWindow window;
 	INSERT IN;
 	mainmenu M;
@@ -270,8 +274,15 @@ int main()
 				num = A.inputs(&window);
 				if (num != -1)
 				{
+					settings.antialiasingLevel = 8;
+					window.create(sf::VideoMode(1300, 750), "Insertion Process", sf::Style::Default, settings);
+					window.setPosition(sf::Vector2i(10, 10));
+					if (root != NULL)
+					{
+						IN.afterinsertion(&window, root, num, 0);
+					}
 					createbst(num);
-					IN.afterinsertion(root, num);
+					IN.afterinsertion(&window,root, num,1);
 				}
 				break;
 			case 2:
@@ -282,6 +293,12 @@ int main()
 				}
 				break;
 			case 3:
+				SEARCH SS;
+				num = A.inputs(&window);
+				if (num != -1)
+				{
+					SS.search(root, num);
+				}
 				break;
 			case 4:
 				return 1;
@@ -296,6 +313,11 @@ int main()
 		{
 			EMPTYOREXISTS B;
 			B.showerr("Data already present");
+		}  
+		catch (DONOTEXISTS)
+		{
+			EMPTYOREXISTS B;
+			B.showerr("No such data found.");
 		}
 	}
 	/*ORDER O;
