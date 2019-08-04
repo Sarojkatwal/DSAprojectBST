@@ -52,7 +52,7 @@ public:
 	}
 	void show(bst *q, sf::RenderWindow *window, float x, float y, float width, float height, int initial, int childdir, float cirrad, int ddat,int i)
 	{
-		float ang;
+		float ang=atan((0.54f*(height+5))/width)/ 0.01745329252;
 		sf::CircleShape shape(cirrad);
 		shape.setFillColor(sf::Color::White);
 		shape.setOutlineThickness(3.0f);
@@ -67,8 +67,10 @@ public:
 		nodedata.setStyle(sf::Text::Bold);
 		if (q != NULL)
 		{
-			nodedata.setPosition(x + cirrad / 2.0f, y + cirrad / 2.6f);
-			float a = sqrt(pow((width*1.3f - sqrt(2.0f)*(cirrad + 2.0f)), 2) + pow(((width*1.30f) / sqrt(3.0f) - sqrt(2.0f)*(cirrad + 2.0f)), 2));
+			nodedata.setPosition(x + cirrad / (q->data / 100 >= 1 ? cirrad/3 : 2.0f), y + cirrad / 2.6f);
+			float a = sqrt(pow((width/0.54f - sqrt(2.0f)*(cirrad + 2.0f)-8.0f), 2) + pow((height- sqrt(2.0f)*(cirrad + 2.0f)), 2));
+			a = ang >= 60 ? a - a / 25 : a;
+			a = ang >= 70 ? a - a / 7 : a;
 			sf::RectangleShape line(sf::Vector2f(a, cirrad / 4));
 			ddata << q->data;
 			nodedata.setString(ddata.str());
@@ -104,21 +106,33 @@ public:
 			{
 				if (childdir == 0)
 				{
-					line.setPosition(x + sqrt(2.0f)*cirrad + 12, y);
-					ang = -30;
+					float kkk = 8.0f;
+					float mm = 0.0f;
+					if (ang > 60)
+					{
+						kkk = 0;
+						mm = 3.0f;
+					}
+					line.setPosition(x + sqrt(2.0f)*cirrad +kkk, y-mm);
+					ang = -ang;
 				}
 				else
 				{
-					line.setPosition(x + 3, y + 3);
-					ang = -62 - 90;
+					float kk = 4.0f;
+					if (ang > 60)
+					{
+						kk =8.0f;
+					}
+					line.setPosition(x + kk, y);
+					ang = -180 + ang;
 				}
 				line.rotate(ang);
 				window->draw(line);
 			}
 			window->draw(shape);
 			window->draw(nodedata);
-			show(q->left, window, x - width, y + height, width / 10.0f * 7.0f, (width / 10.0f * 7.0f) / sqrt(3.0f), 0, 0, cirrad - 2, ddat,i);
-			show(q->right, window, x + width, y + height, width * 7.0f / 10.0f, (width / 10.0f * 7.0f) / sqrt(3.0f), 0, 1, cirrad - 2, ddat,i);
+			show(q->left, window, x - width, y + height, width *0.54f, height-5.0f, 0, 0, cirrad - 2, ddat,i);
+			show(q->right, window, x + width, y + height, width *0.54f, height-5.0f, 0, 1, cirrad - 2, ddat,i);
 		}
 	}
 };

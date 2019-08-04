@@ -49,7 +49,7 @@ public:
 								return 4;
 							}
 						}
-						//std::cout << event.mouseButton.x << "  " << event.mouseButton.y << std::endl;
+						//::cout << atan(1)/;
 					}
 				}
 			}

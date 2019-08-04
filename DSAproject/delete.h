@@ -33,14 +33,14 @@ public:
 			}
 			if (i == 2 && noofchild == 2)
 			{
-				sf::sleep(sf::seconds(2.0f));
+				sf::sleep(sf::seconds(4.0f));
 			}
 			i++;
 		}
 	}
 	void showremovalofnode(bst *q, sf::RenderWindow *window, float x, float y, float width, float height, int initial, int childdir, float cirrad, int ddat, int i,int sdata,int noofchild,int qdata)
 	{
-		float ang;
+		float ang = atan((0.54f*(height + 5)) / width) / 0.01745329252;
 		sf::CircleShape shape(cirrad);
 		shape.setFillColor(sf::Color::White);
 		shape.setOutlineThickness(3.0f);
@@ -61,8 +61,10 @@ public:
 		torder.setPosition(10, 10);
 		if (q != NULL)
 		{
-			nodedata.setPosition(x + cirrad / 2.0f, y + cirrad / 2.6f);
-			float a = sqrt(pow((width*1.3f - sqrt(2.0f)*(cirrad + 2.0f)), 2) + pow(((width*1.30f) / sqrt(3.0f) - sqrt(2.0f)*(cirrad + 2.0f)), 2));
+			nodedata.setPosition(x + cirrad / (q->data / 100 >= 1 ? cirrad / 3 : 2.0f), y + cirrad / 2.6f);
+			float a = sqrt(pow((width / 0.54f - sqrt(2.0f)*(cirrad + 2.0f) - 8.0f), 2) + pow((height - sqrt(2.0f)*(cirrad + 2.0f)), 2));
+			a = ang >= 60 ? a - a / 25 : a;
+			a = ang >= 70 ? a - a / 7 : a;
 			sf::RectangleShape line(sf::Vector2f(a, cirrad / 4));
 			ddata << q->data;
 			nodedata.setString(ddata.str());
@@ -231,7 +233,7 @@ public:
 				else if (i == 4)
 				{
 					hint.str("");
-					hint << "Redirect the pointer from parent node\nof deleted node to its subtree.\nIf node deleted is root node\nMake its child root node.";
+					hint << "Redirect the pointer from parent node\nof deleted node to its subtree.\nIf node deleted is root node\nmake its child a root node.";
 					torder.setString(hint.str());
 					window->draw(torder);
 					if (q->data == ddat)
@@ -262,13 +264,25 @@ public:
 			{
 				if (childdir == 0)
 				{
-					line.setPosition(x + sqrt(2.0f)*cirrad + 12, y);
-					ang = -30;
+					float kkk = 8.0f;
+					float mm = 0.0f;
+					if (ang > 60)
+					{
+						kkk = 0;
+						mm = 3.0f;
+					}
+					line.setPosition(x + sqrt(2.0f)*cirrad + kkk, y - mm);
+					ang = -ang;
 				}
 				else
 				{
-					line.setPosition(x + 3, y + 3);
-					ang = -62 - 90;
+					float kk = 4.0f;
+					if (ang > 60)
+					{
+						kk = 8.0f;
+					}
+					line.setPosition(x + kk, y);
+					ang = -180 + ang;
 				}
 				line.rotate(ang);
 				window->draw(line);
@@ -283,15 +297,18 @@ public:
 			{
 				initial = 0;
 			}
+
+
+			//
 			if (i>4 && ((noofchild==1 && q->data==ddat)|| (noofchild == 2 && q->data == sdata)))
 			{
-				showremovalofnode(q->left, window, x, y  , width , width / sqrt(3.0f), initial, childdir, cirrad , ddat, i, sdata, noofchild,qdata);
-				showremovalofnode(q->right, window, x, y , width , width / sqrt(3.0f), initial, childdir, cirrad, ddat, i, sdata, noofchild,qdata);
+				showremovalofnode(q->left, window, x, y  , width , height, initial, childdir, cirrad , ddat, i, sdata, noofchild,qdata);
+				showremovalofnode(q->right, window, x, y , width , height, initial, childdir, cirrad, ddat, i, sdata, noofchild,qdata);
 			}
 			else
 			{
-				showremovalofnode(q->left, window, x - width, y + height, width / 10.0f * 7.0f, (width / 10.0f * 7.0f) / sqrt(3.0f), initial, 0, cirrad - 2, ddat, i, sdata, noofchild,qdata);
-				showremovalofnode(q->right, window, x + width, y + height, width * 7.0f / 10.0f, (width / 10.0f * 7.0f) / sqrt(3.0f), initial, 1, cirrad - 2, ddat, i, sdata, noofchild,qdata);
+				showremovalofnode(q->left, window, x - width, y + height, width *0.54f, height-5.0f, initial, 0, cirrad - 2, ddat, i, sdata, noofchild,qdata);
+				showremovalofnode(q->right, window, x + width, y + height, width *0.54f, height-0.5f, initial, 1, cirrad - 2, ddat, i, sdata, noofchild,qdata);
 			}
 		}
 	}
